@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewsNest</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="output.css">
+  <style>
+    body {
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    }
+    /* Breaking ticker */
+    #breaking-ticker {
+      background: #ff4d4d;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+    #breaking-ticker .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll 15s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    /* Back to top */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #00bcd4;
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      display: none;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="icon" href="newslogo.png" type="image/png" />
+
+</head>
+
+
+
+<body class="bg-gradient-to-br from-cyan-100 to-slate-50 text-gray-900">
+
+  <!-- Breaking News Ticker -->
+  <div id="breaking-ticker" class="py-2">
+    <div class="ticker-content px-4">
+      🔴 Breaking: Major summit concludes with historic climate agreement &nbsp;&nbsp;|&nbsp;&nbsp; 🔴 Update: Global stock markets rally on tech surge &nbsp;&nbsp;|&nbsp;&nbsp; 🔴 Alert: Severe weather warning issued in coastal regions
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 shadow-lg py-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+      <div class="flex items-center gap-3 mb-3 md:mb-0">
+        <a href="index.html">
+          <img src="newslogo.png" alt="Logo"
+            class="w-10 h-10 rounded-lg shadow-lg bg-gradient-to-tr from-cyan-400 to-teal-800 p-2 transition-transform duration-200" />
+        </a>
+        <span class="text-white text-3xl font-bold tracking-wide drop-shadow">
+          News<span class="text-cyan-400">Nest</span>
+        </span>
+      </div>
+      <ul class="flex flex-wrap gap-6 items-center text-white font-medium">
+        <li><a href="#" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="world.html" class="hover:text-cyan-400 transition">World</a></li>
+        <li><a href="politics.html" class="hover:text-cyan-400 transition">Politics</a></li>
+        <li><a href="business.html" class="hover:text-cyan-400 transition">Business</a></li>
+        <li><a href="technology.html" class="hover:text-cyan-400 transition">Technology</a></li>
+        <li><a href="sports.html" class="hover:text-cyan-400 transition">Sports</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto mt-6 py-4 px-4">
+    <section class="flex flex-col lg:flex-row gap-8">
+      <!-- Main Article -->
+      <article class="flex-1 bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition">
+        <img src="https://via.placeholder.com/800x450" alt="Headline News" class="w-full rounded-lg mb-5 shadow-md" id="hero-img" />
+        <h1 class="text-3xl font-bold mb-3 text-teal-800" id="hero-title">Loading headline...</h1>
+        <p class="text-cyan-500 mb-3 font-semibold" id="hero-byline">By …</p>
+        <p class="text-lg leading-relaxed mb-4" id="hero-excerpt">Loading summary…</p>
+        <a href="#" class="inline-block mt-4 bg-gradient-to-r from-cyan-400 to-teal-800 text-white px-6 py-2 rounded font-bold shadow hover:from-teal-800 hover:to-cyan-400 transition" id="hero-link">Read More</a>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="flex flex-col gap-6 w-full lg:w-1/3">
+        <!-- Latest News -->
+        <section class="bg-white rounded-xl shadow-lg p-6">
+          <h2 class="text-lg font-bold mb-4 text-teal-800">Latest News</h2>
+          <ul id="latest-news" class="space-y-2 text-gray-700">
+            <li>Loading…</li>
+          </ul>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="bg-white rounded-xl shadow-lg p-6" id="related-articles">
+          <h2 class="text-lg font-bold mb-4 text-teal-800">Related Articles</h2>
+          <ul class="space-y-2">
+            <li>Loading…</li>
+          </ul>
+        </section>
+
+        <!-- Live Updates -->
+        <section class="bg-white rounded-xl shadow-lg p-6" id="live-updates">
+          <h2 class="text-lg font-bold mb-4 text-teal-800">Live Updates</h2>
+          <div class="space-y-2">
+            <div>Loading…</div>
+          </div>
+        </section>
+      </aside>
+    </section>
+    
+    <!-- More News Section -->
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold mb-6 text-teal-800">More News</h2>
+      <div id="more-news" class="flex flex-col md:flex-row gap-6 justify-between">
+        <p>Loading…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Back to Top -->
+  <div id="back-to-top">↑</div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-8 mt-12">
+    <p class="text-gray-500">© 2025 NewsPortal. All rights reserved.</p>
+  </footer>
+<script src="script.js"></script>
+
+ </body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Politics News - NewsPortal</title>
+   <link rel="stylesheet" href="output.css">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; }
+  </style>
+  <link rel="icon" href="newslogo.png" type="image/png" />
+
+</head>
+<body class="bg-gradient-to-br from-cyan-100 to-slate-50 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 shadow-lg py-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+     <div class="flex items-center gap-3 mb-3 md:mb-0">
+        <a href="index.html">
+          <img src="newslogo.png" alt="Logo"
+            class="w-10 h-10 rounded-lg shadow-lg bg-gradient-to-tr from-cyan-400 to-teal-800 p-2 transition-transform duration-200" />
+        </a>
+        <span class="text-white text-3xl font-bold tracking-wide drop-shadow">
+          News<span class="text-cyan-400">Nest</span>
+        </span>
+      </div>
+      <ul class="flex flex-wrap gap-6 items-center text-white font-medium">
+        <li><a href="index.html" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="world.html" class="hover:text-cyan-400 transition">World</a></li>
+        <li><a href="politics.html" class="hover:text-cyan-400 transition">Politics</a></li>
+        <li><a href="business.html" class="hover:text-cyan-400 transition">Business</a></li>
+        <li><a href="technology.html" class="hover:text-cyan-400 transition">Technology</a></li>
+        <li><a href="sports.html" class="hover:text-cyan-400">Sports</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-8 px-4 max-w-5xl">
+    <h1 class="text-4xl font-bold text-teal-800 mb-6">Latest Political News</h1>
+    <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <p class="text-gray-600">Loading political news...</p>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-white text-center py-6 mt-12 text-lg">
+    &copy; 2024 NewsPortal. All rights reserved.
+  </footer>
+<script src="politics.js"></script>
+</body>
+</html>
