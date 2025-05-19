@@ -12,19 +12,17 @@
 
       const API_KEY = "ed4fa8c44fd74e01a3f145f35cf24b89";
       function fetchCategory(cat, size) {
-        return fetch(
-          `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
-        )
-          .then(r => r.json())
-          .then(j => (j.articles||[]).map(a => ({
-            title: a.title,
-            url: a.url,
-            image: a.urlToImage,
-            publishedAt: a.publishedAt,
-            description: a.description || "",
-            author: a.author || a.source.name
-          })));
-      }
+  return fetch(`/api/fetchNews?category=${cat}&size=${size}`)
+    .then(r => r.json())
+    .then(j => (j.articles || []).map(a => ({
+      title: a.title,
+      url: a.url,
+      image: a.urlToImage,
+      publishedAt: a.publishedAt,
+      description: a.description || "",
+      author: a.author || a.source.name
+    })));
+}
 
       Promise.all([
         fetchCategory("sports", 10),
@@ -91,20 +89,3 @@
     });
 // script.js
 // Barba.js for page transitions
- barba.init({
-      transitions: [{
-        name: 'fade',
-        leave(data) {
-          return gsap.to(data.current.container, {
-            opacity: 0,
-            duration: 0.5
-          });
-        },
-        enter(data) {
-          return gsap.from(data.next.container, {
-            opacity: 0,
-            duration: 0.5
-          });
-        }
-      }]
-    });
