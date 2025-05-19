@@ -10,9 +10,12 @@
       const relatedList  = document.querySelector("#related-articles ul");
       const liveUpdates  = document.querySelector("#live-updates .space-y-2");
 
-      const API_KEY = "ed4fa8c44fd74e01a3f145f35cf24b89";
-      function fetchCategory(cat, size) {
-  return fetch(`/api/fetchNews?category=${cat}&size=${size}`)
+     const API_KEY = "ed4fa8c44fd74e01a3f145f35cf24b89"; // exposed in frontend
+
+function fetchCategory(cat, size) {
+  return fetch(
+    `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
+  )
     .then(r => r.json())
     .then(j => (j.articles || []).map(a => ({
       title: a.title,
@@ -23,6 +26,7 @@
       author: a.author || a.source.name
     })));
 }
+
 
       Promise.all([
         fetchCategory("sports", 10),
