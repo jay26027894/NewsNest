@@ -9,26 +9,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const relatedList  = document.querySelector("#related-articles ul");
   const liveUpdates  = document.querySelector("#live-updates .space-y-2");
 
-  const API_KEY = "408a0df39d0c4cf4a0f4a0f7e905d784"; // your API key
-  const proxy = "https://cors-anywhere.herokuapp.com/"; // free proxy for CORS
+  const API_KEY = "dbd78e60def354e578e0942b7bc483fb"; // your GNews API key
 
   function fetchCategory(cat, size) {
     return fetch(
-      proxy + `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
+      `https://gnews.io/api/v4/top-headlines?category=${cat}&lang=en&max=${size}&token=${API_KEY}`
     )
       .then(r => r.json())
       .then(j => {
-        if(j.status !== "ok") {
-          console.error("API Error:", j);
+        if (!j.articles) {
+          console.error("GNews API error:", j);
           return [];
         }
-        return (j.articles || []).map(a => ({
+        return j.articles.map(a => ({
           title: a.title,
           url: a.url,
-          image: a.urlToImage,
+          image: a.image,
           publishedAt: a.publishedAt,
           description: a.description || "",
-          author: a.author || a.source.name
+          author: a.source.name || "Unknown"
         }));
       }).catch(err => {
         console.error("Fetch error:", err);
@@ -38,15 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   Promise.all([
     fetchCategory("sports", 10),
-    fetchCategory("business",10),
-    fetchCategory("technology",10),
-    fetchCategory("general",12)
+    fetchCategory("business", 10),
+    fetchCategory("technology", 10),
+    fetchCategory("general", 12)
   ]).then(([sports, business, tech, general]) => {
     const all = [...sports, ...business, ...tech, ...general]
       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-
-    console.log('Fetched all news articles count:', all.length);
-    console.log('Top article:', all[0]);
 
     // Hero
     if (all[0]) {
