@@ -1,95 +1,102 @@
+// Replace with your actual API key
+const apiKey = "408a0df39d0c4cf4a0f4a0f7e905d784";
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const heroImg      = document.getElementById("hero-img");
-      const heroTitle    = document.getElementById("hero-title");
-      const heroByline   = document.getElementById("hero-byline");
-      const heroExcerpt  = document.getElementById("hero-excerpt");
-      const heroLink     = document.getElementById("hero-link");
-      const latestList   = document.getElementById("latest-news");
-      const moreDiv      = document.getElementById("more-news");
-      const relatedList  = document.querySelector("#related-articles ul");
-      const liveUpdates  = document.querySelector("#live-updates .space-y-2");
+// API endpoint URLs
+const BASE_URL = "https://newsapi.org/v2";
 
-     const API_KEY = "408a0df39d0c4cf4a0f4a0f7e905d784"; // exposed in frontend
-
-function fetchCategory(cat, size) {
-  return fetch(
-    `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
-  )
-    .then(r => r.json())
-    .then(j => (j.articles || []).map(a => ({
-      title: a.title,
-      url: a.url,
-      image: a.urlToImage,
-      publishedAt: a.publishedAt,
-      description: a.description || "",
-      author: a.author || a.source.name
-    })));
+// Utility function to fetch news data
+async function fetchNews(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.articles;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return [];
+  }
 }
 
+// 1. Load Hero Section with Top Headline
+async function loadHeroSection() {
+  const articles = await fetchNews(`${BASE_URL}/top-headlines?country=us&pageSize=1&apiKey=${apiKey}`);
+  if (articles.length > 0) {
+    const article = articles[0];
+    document.getElementById("hero-img").src = article.urlToImage || "https://via.placeholder.com/800x450";
+    document.getElementById("hero-title").textContent = article.title;
+    document.getElementById("hero-byline").textContent = `By ${article.author || "Unknown"}`;
+    document.getElementById("hero-excerpt").textContent = article.description || "No description available.";
+    document.getElementById("hero-link").href = article.url;
+  }
+}
 
-      Promise.all([
-        fetchCategory("sports", 10),
-        fetchCategory("business",10),
-        fetchCategory("technology",10),
-        fetchCategory("general",12)
-      ]).then(([sports, business, tech, general]) => {
-        const all = [...sports, ...business, ...tech, ...general]
-          .sort((a,b)=> new Date(b.publishedAt) - new Date(a.publishedAt));
+// 2. Load Latest News List
+async function loadLatestNews() {
+  const articles = await fetchNews(`${BASE_URL}/top-headlines?country=us&pageSize=5&apiKey=${apiKey}`);
+  const list = document.getElementById("latest-news");
+  list.innerHTML = "";
+  articles.forEach(article => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${article.url}" target="_blank" class="text-blue-500 hover:underline">${article.title}</a>`;
+    list.appendChild(li);
+  });
+}
 
-        // Hero
-        if (all[0]) {
-          const top = all[0];
-          heroImg.src = top.image || "https://via.placeholder.com/800x450";
-          heroTitle.textContent = top.title;
-          heroByline.textContent = `By ${top.author} | ${new Date(top.publishedAt).toLocaleDateString()}`;
-          heroExcerpt.textContent = top.description;
-          heroLink.href = top.url;
-        }
+// 3. Load Related Articles (can use 'technology' for now)
+async function loadRelatedArticles() {
+  const articles = await fetchNews(`${BASE_URL}/top-headlines?category=technology&pageSize=5&country=us&apiKey=${apiKey}`);
+  const section = document.querySelector("#related-articles ul");
+  section.innerHTML = "";
+  articles.forEach(article => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${article.url}" target="_blank" class="text-blue-500 hover:underline">${article.title}</a>`;
+    section.appendChild(li);
+  });
+}
 
-        // Latest News
-        latestList.innerHTML = "";
-        all.slice(1,4).forEach(a=>{
-          const li=document.createElement("li");
-          li.innerHTML=`<a href="${a.url}" target="_blank" class="font-semibold hover:text-cyan-500">${a.title}</a><div class="text-xs text-gray-500">${new Date(a.publishedAt).toLocaleTimeString()}</div>`;
-          latestList.appendChild(li);
-        });
+// 4. Load Live Updates (can use 'breaking news' or keyword like 'breaking')
+async function loadLiveUpdates() {
+  const articles = await fetchNews(`${BASE_URL}/everything?q=breaking&sortBy=publishedAt&pageSize=5&apiKey=${apiKey}`);
+  const container = document.querySelector("#live-updates .space-y-2");
+  container.innerHTML = "";
+  articles.forEach(article => {
+    const div = document.createElement("div");
+    div.innerHTML = `<a href="${article.url}" target="_blank" class="text-blue-500 hover:underline">${article.title}</a>`;
+    container.appendChild(div);
+  });
+}
 
-        // Related Articles (tech+business)
-        relatedList.innerHTML="";
-        [...tech.slice(0,3),...business.slice(0,3)].forEach(a=>{
-          const li=document.createElement("li");
-          li.innerHTML=`<a href="${a.url}" target="_blank" class="hover:underline">${a.title}</a>`;
-          relatedList.appendChild(li);
-        });
+// 5. Load More News (business headlines)
+async function loadMoreNews() {
+  const articles = await fetchNews(`${BASE_URL}/top-headlines?category=business&pageSize=3&country=us&apiKey=${apiKey}`);
+  const container = document.getElementById("more-news");
+  container.innerHTML = "";
+  articles.forEach(article => {
+    const div = document.createElement("div");
+    div.className = "bg-white rounded-lg shadow p-4 flex-1";
+    div.innerHTML = `
+      <img src="${article.urlToImage || 'https://via.placeholder.com/400x200'}" class="rounded mb-3 w-full h-48 object-cover" alt="${article.title}">
+      <h3 class="text-lg font-bold mb-1">${article.title}</h3>
+      <p class="text-sm text-gray-600 mb-2">${article.description || ''}</p>
+      <a href="${article.url}" target="_blank" class="text-cyan-600 hover:underline font-medium">Read More</a>
+    `;
+    container.appendChild(div);
+  });
+}
 
-        // Live Updates (sports)
-        liveUpdates.innerHTML="";
-        sports.slice(0,5).forEach(a=>{
-          const div=document.createElement("div");
-          div.className="border-l-4 border-cyan-400 p-3 mb-2 bg-cyan-50";
-          div.innerHTML=`<span class="font-semibold">${new Date(a.publishedAt).toLocaleTimeString()}:</span> <a href="${a.url}" target="_blank" class="hover:text-cyan-700">${a.title}</a>`;
-          liveUpdates.appendChild(div);
-        });
+// Scroll-to-top button
+const backToTop = document.getElementById("back-to-top");
+window.addEventListener("scroll", () => {
+  backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+});
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
-        // More News
-        moreDiv.innerHTML="";
-        all.slice(4,10).forEach(a=>{
-          const art=document.createElement("article");
-          art.className="flex-1 bg-white rounded-xl shadow-lg p-5 hover:-translate-y-1 hover:scale-105 hover:shadow-2xl transition";
-          art.innerHTML=`<img src="${a.image||'https://via.placeholder.com/400'}" alt="" class="w-full rounded-lg mb-3"/><h3 class="text-lg font-bold mb-2 text-teal-800">${a.title}</h3><p class="text-gray-600 text-sm mb-2">${new Date(a.publishedAt).toLocaleString()}</p><p class="text-gray-800 mb-2">${a.description.slice(0,100)}…</p><a href="${a.url}" target="_blank" class="text-cyan-500 font-semibold underline hover:text-cyan-700">Read More</a>`;
-          moreDiv.appendChild(art);
-        });
-      }).catch(err=>{
-        console.error(err);
-      });
-
-      // Back to top
-      const btn=document.getElementById('back-to-top');
-      window.addEventListener('scroll',()=>{
-        btn.style.display=window.scrollY>200?'block':'none';
-      });
-      btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-    });
-// script.js
-// Barba.js for page transitions
+// Initial loader
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeroSection();
+  loadLatestNews();
+  loadRelatedArticles();
+  loadLiveUpdates();
+  loadMoreNews();
+});
