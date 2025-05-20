@@ -1,15 +1,14 @@
 const container = document.getElementById("tech-news");
 container.innerHTML = "<p class='text-gray-600'>Loading news...</p>";
 
-const GNEWS_API_KEY = "a11403d654213e8015504a809f0db750";
+const GNEWS_API_KEY = "dbd78e60def354e578e0942b7bc483fb";
+const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+const apiUrl = `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&token=${GNEWS_API_KEY}&max=18`;
 
 async function fetchTechNews() {
   try {
-    const response = await fetch(
-      `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&token=${GNEWS_API_KEY}&max=18`
-    );
+    const response = await fetch(proxyUrl + apiUrl);
     if (!response.ok) throw new Error("Network response was not ok");
-
     const data = await response.json();
 
     if (!data.articles || data.articles.length === 0) {
@@ -17,7 +16,7 @@ async function fetchTechNews() {
       return;
     }
 
-    container.innerHTML = ""; // clear loading text
+    container.innerHTML = "";
 
     data.articles.forEach(article => {
       const card = document.createElement("div");
