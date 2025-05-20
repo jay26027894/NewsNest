@@ -1,13 +1,18 @@
 const container = document.getElementById("tech-news");
 container.innerHTML = "<p class='text-gray-600'>Loading news...</p>";
 
-const GNEWS_API_KEY = "dbd78e60def354e578e0942b7bc483fb";
-const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-const apiUrl = `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&token=${GNEWS_API_KEY}&max=18`;
+const apiUrl = "https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&max=18";
 
 async function fetchTechNews() {
   try {
-    const response = await fetch(proxyUrl + apiUrl);
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "f359e71ef1msh35989f134b96a30p1cec24jsn11b87fca633f",
+        "X-RapidAPI-Host": "gnews.io"
+      }
+    });
+
     if (!response.ok) throw new Error("Network response was not ok");
     const data = await response.json();
 
@@ -32,7 +37,7 @@ async function fetchTechNews() {
     });
   } catch (error) {
     container.innerHTML = `<p class="text-red-600">Failed to load news. Please try again later.</p>`;
-    console.error("Error fetching GNews:", error);
+    console.error("Error fetching GNews from RapidAPI:", error);
   }
 }
 
