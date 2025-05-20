@@ -1,7 +1,7 @@
 const container = document.getElementById("tech-news");
 container.innerHTML = "<p class='text-gray-600'>Loading news...</p>";
 
-const apiUrl = "https://letscrape-6brba3guo5.p.rapidapi.com/api/real-time-news-data/topic/technology";
+const apiUrl = "https://letscrape-6brba3guo5.p.rapidapi.com/api/real-time-news-data/topic-news?topic=technology";
 
 async function fetchTechNews() {
   try {
@@ -17,18 +17,18 @@ async function fetchTechNews() {
 
     const data = await response.json();
 
-    if (!data || !data.news || data.news.length === 0) {
+    if (!data || !data.articles || data.articles.length === 0) {
       container.innerHTML = "<p class='text-gray-600'>No news found.</p>";
       return;
     }
 
     container.innerHTML = "";
 
-    data.news.forEach(article => {
+    data.articles.forEach(article => {
       const card = document.createElement("div");
       card.className = "bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition mb-6";
       card.innerHTML = `
-        ${article.image ? `<img src="${article.image}" alt="news image" class="rounded w-full h-48 object-cover mb-4">` : ""}
+        ${article.image_url ? `<img src="${article.image_url}" alt="news image" class="rounded w-full h-48 object-cover mb-4">` : ""}
         <h2 class="text-lg font-bold text-teal-800">${article.title}</h2>
         <p class="text-gray-600 text-sm mb-2">${article.source || "Unknown Source"}</p>
         <p class="text-sm text-gray-700 mb-3">${article.description || ""}</p>
@@ -39,7 +39,7 @@ async function fetchTechNews() {
 
   } catch (error) {
     container.innerHTML = `<p class="text-red-600">Failed to load news. Please try again later.</p>`;
-    console.error("Error fetching news from letscrape API:", error);
+    console.error("Error fetching news:", error);
   }
 }
 
