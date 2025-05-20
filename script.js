@@ -10,7 +10,7 @@
       const relatedList  = document.querySelector("#related-articles ul");
       const liveUpdates  = document.querySelector("#live-updates .space-y-2");
 
-     const API_KEY = "ed4fa8c44fd74e01a3f145f35cf24b89"; // exposed in frontend
+     const API_KEY = "408a0df39d0c4cf4a0f4a0f7e905d784"; // exposed in frontend
 
 function fetchCategory(cat, size) {
   return fetch(
