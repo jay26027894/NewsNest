@@ -1,4 +1,5 @@
-const newsContainer = document.getElementById("tech-news");
+const container = document.getElementById("tech-news");
+container.innerHTML = "";
 
 const sources = [
   {
@@ -14,7 +15,7 @@ const sources = [
   },
   {
     name: "GNews",
-    url: `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&token=dbd78e60def354e578e0942b7bc483fb`,
+    url: `https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&token=a11403d654213e8015504a809f0db750`,
     process: res => res.articles.map(a => ({
       title: a.title,
       description: a.description,
@@ -22,51 +23,43 @@ const sources = [
       image: a.image,
       source: a.source.name || "GNews"
     }))
-  },
-  {
-    name: "MediaStack",
-    url: `http://api.mediastack.com/v1/news?access_key=2ca49c04bdd30aa9086b1a384d08dd06&categories=technology&languages=en&limit=10`,
-    process: res => res.data.map(a => ({
-      title: a.title,
-      description: a.description,
-      url: a.url,
-      image: null,
-      source: a.source
-    }))
   }
+  // MediaStack removed due to mixed content (HTTP) and CORS issues
 ];
 
-async function fetchTechNews() {
-  newsContainer.innerHTML = "<p class='text-gray-600'>Loading technology news...</p>";
-  try {
-    const results = await Promise.all(
-      sources.map(async source => {
-        const res = await fetch(source.url);
-        const data = await res.json();
-        return source.process(data);
+// Fetch all sources with error logging
+Promise.all(
+  sources.map(source =>
+    fetch(source.url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
       })
-    );
+      .then(data => source.process(data))
+      .catch(err => {
+        console.error(`Error fetching from ${source.name}:`, err);
+        return [];
+      })
+  )
+).then(results => {
+  const allNews = results.flat().slice(0, 18);
+  container.innerHTML = "";
 
-    const allNews = results.flat().slice(0, 18);
-
-    if (allNews.length === 0) {
-      newsContainer.innerHTML = "<p class='text-red-600'>No technology news found.</p>";
-      return;
-    }
-
-    newsContainer.innerHTML = allNews.map(article => `
-      <article class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition flex flex-col">
-        <img src="${article.image || 'https://via.placeholder.com/400x200?text=No+Image'}" alt="News Image" class="rounded w-full h-48 object-cover mb-4" />
-        <h2 class="text-lg font-bold text-teal-800">${article.title}</h2>
-        <p class="text-gray-600 text-sm mb-2">${article.source}</p>
-        <p class="text-sm text-gray-700 flex-grow">${article.description || ''}</p>
-        <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="mt-3 text-cyan-600 hover:underline font-semibold">Read More →</a>
-      </article>
-    `).join("");
-
-  } catch (error) {
-    newsContainer.innerHTML = `<p class="text-red-600">Error loading news: ${error.message}</p>`;
+  if (allNews.length === 0) {
+    container.innerHTML = "<p class='text-gray-600'>No news found.</p>";
+    return;
   }
-}
 
-fetchTechNews();
+  allNews.forEach(article => {
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition";
+    card.innerHTML = `
+      ${article.image ? `<img src="${article.image}" alt="news image" class="rounded w-full h-48 object-cover mb-4">` : ""}
+      <h2 class="text-lg font-bold text-teal-800">${article.title}</h2>
+      <p class="text-gray-600 text-sm mb-2">${article.source}</p>
+      <p class="text-sm text-gray-700 mb-3">${article.description || ""}</p>
+      <a href="${article.url}" target="_blank" class="text-cyan-500 hover:text-cyan-700 font-semibold">Read More →</a>
+    `;
+    container.appendChild(card);
+  });
+});
