@@ -7,33 +7,46 @@ document.addEventListener("DOMContentLoaded", () => {
   const latestList   = document.getElementById("latest-news");
   const moreDiv      = document.getElementById("more-news");
   const relatedList  = document.querySelector("#related-articles ul");
-  const liveUpdates  = document.querySelector("#live-updates");
+  const liveUpdates  = document.querySelector("#live-updates .space-y-2");
 
-  const API_KEY = "408a0df39d0c4cf4a0f4a0f7e905d784"; // exposed API key
+  const API_KEY = "408a0df39d0c4cf4a0f4a0f7e905d784"; // your API key
+  const proxy = "https://cors-anywhere.herokuapp.com/"; // free proxy for CORS
 
   function fetchCategory(cat, size) {
     return fetch(
-      `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
+      proxy + `https://newsapi.org/v2/top-headlines?category=${cat}&language=en&pageSize=${size}&apiKey=${API_KEY}`
     )
       .then(r => r.json())
-      .then(j => (j.articles || []).map(a => ({
-        title: a.title,
-        url: a.url,
-        image: a.urlToImage,
-        publishedAt: a.publishedAt,
-        description: a.description || "",
-        author: a.author || a.source.name
-      })));
+      .then(j => {
+        if(j.status !== "ok") {
+          console.error("API Error:", j);
+          return [];
+        }
+        return (j.articles || []).map(a => ({
+          title: a.title,
+          url: a.url,
+          image: a.urlToImage,
+          publishedAt: a.publishedAt,
+          description: a.description || "",
+          author: a.author || a.source.name
+        }));
+      }).catch(err => {
+        console.error("Fetch error:", err);
+        return [];
+      });
   }
 
   Promise.all([
     fetchCategory("sports", 10),
-    fetchCategory("business", 10),
-    fetchCategory("technology", 10),
-    fetchCategory("general", 12)
+    fetchCategory("business",10),
+    fetchCategory("technology",10),
+    fetchCategory("general",12)
   ]).then(([sports, business, tech, general]) => {
     const all = [...sports, ...business, ...tech, ...general]
       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+    console.log('Fetched all news articles count:', all.length);
+    console.log('Top article:', all[0]);
 
     // Hero
     if (all[0]) {
