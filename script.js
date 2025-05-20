@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const relatedList  = document.querySelector("#related-articles ul");
   const liveUpdates  = document.querySelector("#live-updates .space-y-2");
 
-  const API_KEY = "dbd78e60def354e578e0942b7bc483fb"; // your GNews API key
+  const API_KEY = "a11403d654213e8015504a809f0db750"; // your GNews API key
 
   function fetchCategory(cat, size) {
     return fetch(
