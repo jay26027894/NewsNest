@@ -15,7 +15,7 @@ const sources = [
   },
   {
     name: "GNews",
-    url: `https://gnews.io/api/v4/top-headlines?topic=sports&lang=en&country=in&max=10&token=dbd78e60def354e578e0942b7bc483fb`,
+    url: `https://gnews.io/api/v4/top-headlines?topic=sports&lang=en&country=in&max=10&token=a11403d654213e8015504a809f0db750`,
     process: res => res.articles.map(a => ({
       title: a.title,
       description: a.description,
