@@ -1,7 +1,7 @@
 const container = document.getElementById("tech-news");
 container.innerHTML = "<p class='text-gray-600'>Loading news...</p>";
 
-const apiUrl = "https://gnews.io/api/v4/top-headlines?topic=technology&lang=en&country=in&max=18";
+const apiUrl = "https://gnewsapi.p.rapidapi.com/api/v4/top-headlines?topic=technology&lang=en&country=in&max=18";
 
 async function fetchTechNews() {
   try {
@@ -9,11 +9,12 @@ async function fetchTechNews() {
       method: "GET",
       headers: {
         "X-RapidAPI-Key": "f359e71ef1msh35989f134b96a30p1cec24jsn11b87fca633f",
-        "X-RapidAPI-Host": "gnews.io"
+        "X-RapidAPI-Host": "gnewsapi.p.rapidapi.com"
       }
     });
 
     if (!response.ok) throw new Error("Network response was not ok");
+
     const data = await response.json();
 
     if (!data.articles || data.articles.length === 0) {
