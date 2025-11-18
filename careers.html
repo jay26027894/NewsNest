@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers - NewsNest</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="output.css">
+  <style>
+    body {
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    }
+  </style>
+  <link rel="icon" href="newslogo.png" type="image/png" />
+</head>
+
+<body class="bg-gradient-to-br from-cyan-100 to-slate-50 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 shadow-lg py-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+      <div class="flex items-center gap-3 mb-3 md:mb-0">
+        <a href="index.html">
+          <img src="newslogo.png" alt="Logo"
+            class="w-10 h-10 rounded-lg shadow-lg bg-gradient-to-tr from-cyan-400 to-teal-800 p-2 transition-transform duration-200" />
+        </a>
+        <span class="text-white text-3xl font-bold tracking-wide drop-shadow">
+          News<span class="text-cyan-400">Nest</span>
+        </span>
+      </div>
+      <ul class="flex flex-wrap gap-6 items-center text-white font-medium">
+        <li><a href="index.html" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="world.html" class="hover:text-cyan-400 transition">World</a></li>
+        <li><a href="business.html" class="hover:text-cyan-400 transition">Business</a></li>
+        <li><a href="sports.html" class="hover:text-cyan-400 transition">Sports</a></li>
+        <li><a href="careers.html" class="text-cyan-400 transition">Careers</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto mt-6 py-4 px-4">
+    <!-- Page Header -->
+    <section class="mb-8">
+      <h1 class="text-4xl font-bold text-teal-800 mb-3">Career & Job News</h1>
+      <p class="text-gray-600 text-lg">Stay updated with the latest career trends, job market insights, and professional development news.</p>
+    </section>
+
+    <!-- Networking Resources Section -->
+    <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-teal-800">💼 Professional Networking Resources</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="border-l-4 border-cyan-400 pl-4">
+          <h3 class="font-bold text-lg mb-2">Finding Recruiters on LinkedIn</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>✓ Use LinkedIn's advanced search to find recruiters in your industry</li>
+            <li>✓ Search for job titles like "Technical Recruiter", "Talent Acquisition"</li>
+            <li>✓ Join industry-specific LinkedIn groups</li>
+            <li>✓ Follow companies you're interested in</li>
+          </ul>
+        </div>
+        <div class="border-l-4 border-teal-400 pl-4">
+          <h3 class="font-bold text-lg mb-2">Messaging Recruiters Effectively</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>✓ Keep your message concise and professional</li>
+            <li>✓ Mention specific roles or companies you're interested in</li>
+            <li>✓ Highlight your relevant skills and experience</li>
+            <li>✓ Include a clear call-to-action</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-6 bg-cyan-50 p-4 rounded-lg">
+        <h3 class="font-bold text-lg mb-2">📝 Sample Message Template:</h3>
+        <div class="bg-white p-4 rounded border border-cyan-200 text-gray-700 italic">
+          "Hi [Recruiter Name], I noticed you recruit for [Company/Industry]. I'm a [Your Role] with X years of experience in [Skills]. I'm currently exploring new opportunities in [Area]. Would you be open to a brief conversation about potential openings?"
+        </div>
+      </div>
+    </section>
+
+    <!-- Career News Section -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-6 text-teal-800">Latest Career News</h2>
+      <div id="career-news" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <p>Loading career news...</p>
+      </div>
+    </section>
+
+    <!-- Job Market Insights -->
+    <section class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-teal-800">📊 Job Market Insights</h2>
+      <div id="job-insights" class="space-y-4">
+        <p>Loading job market insights...</p>
+      </div>
+    </section>
+
+    <!-- Additional Resources -->
+    <section class="bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4 text-teal-800">🔗 Helpful Career Links</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <a href="https://www.linkedin.com/jobs" target="_blank" 
+           class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
+          <h3 class="font-bold text-cyan-600">LinkedIn Jobs</h3>
+          <p class="text-sm text-gray-600">Search and apply for jobs</p>
+        </a>
+        <a href="https://www.linkedin.com/search/results/people/?keywords=recruiter" target="_blank" 
+           class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
+          <h3 class="font-bold text-cyan-600">Find Recruiters</h3>
+          <p class="text-sm text-gray-600">Connect with recruiters</p>
+        </a>
+        <a href="https://www.linkedin.com/help/linkedin/answer/a549047" target="_blank" 
+           class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
+          <h3 class="font-bold text-cyan-600">LinkedIn Help</h3>
+          <p class="text-sm text-gray-600">Profile & messaging tips</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-8 mt-12">
+    <p class="text-gray-500">© 2025 NewsPortal. All rights reserved.</p>
+  </footer>
+
+  <script src="careers.js"></script>
+</body>
+
+</html>
